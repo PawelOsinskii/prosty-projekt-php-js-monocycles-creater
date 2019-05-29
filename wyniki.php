@@ -3,6 +3,11 @@
 
 
 
+<?php include('header.php') ?>
+<div id='wyniki'>
+</div>
+ <a id="download" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Pobierz Plik</a>
+ <a target='_blank' id="print" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Drukuj</a>
 
 <script> 
 
@@ -145,13 +150,13 @@ function createWeeks(phase, numberOfWeeks){
 }
 
 function renderMacroCycle(phases) {
-	var html = ['<table>'];
+	var html = ['<table class="table"> '];
 	for (var phase of phases) {
 		html.push('<tr>');
 		html.push(translatePhaseName(phase.name));
 		
-		html.push('<table>');
-			html.push('<tr><th>Lp.</th><th>Przerwa</th><th>% maksa</th><th>Serie</th><th>Powtórzenia</th></tr>');
+		html.push('<table class="table">');
+			html.push('<tr><th>Tydzien</th><th>Przerwa</th><th>% maksa</th><th>Serie</th><th>Powtórzenia</th></tr>');
 		for (var week of phase.weeks) {
 			html.push('<tr>');
 			html.push(`<td>${week.no}</td><td>${week.breakTime}</td><td>${week.maxLoad}</td><td>${week.series}</td><td>${week.repetition}</td>`);
@@ -165,6 +170,7 @@ function renderMacroCycle(phases) {
 	
 	return html.join('');
 }
+
 
 function createMacroCycle(phase,bmi,numberOfPhases,frequency){
 	
@@ -189,7 +195,12 @@ function createMacroCycle(phase,bmi,numberOfPhases,frequency){
 
 window.addEventListener('load', () => {
 	var marcoCyclePhases = createMacroCycle(phase,bmi,NUMBER_OF_MACROCYCLES,frequency);
-	document.body.innerHTML = renderMacroCycle(marcoCyclePhases);
+	document.getElementById('print').href='dodruku.php?html='+escape(renderMacroCycle(marcoCyclePhases));
+	var file = new Blob([renderMacroCycle(marcoCyclePhases)], {type: "text/html"});
+	document.getElementById('download').download='tabelka.html';
+	document.getElementById('download').href=URL.createObjectURL(file);
+	document.getElementById('wyniki').innerHTML=renderMacroCycle(marcoCyclePhases);
+	
 });
 
 function test(a, b) {
@@ -241,5 +252,7 @@ test(createWeeks('third',5),[
  </script>
  
 
+ 
+<?php include('footer.php') ?>
  
  
