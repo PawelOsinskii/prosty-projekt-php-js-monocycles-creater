@@ -33,7 +33,7 @@ function translatePhaseName(phase){
 	if(phase == 'first')
 		return 'Trening na wzrost siły';
 	if(phase == 'second')
-		return 'Trening na przyrost masy';
+		return 'Trening na Przyrost masy mięśniowej';
 	if(phase == 'third')
 		return  'Trening redukcyjny';
 	if(phase == 'break')
@@ -156,7 +156,7 @@ function renderMacroCycle(phases) {
 		html.push(translatePhaseName(phase.name));
 		
 		html.push('<table class="table">');
-			html.push('<tr><th>Tydzien</th><th>Przerwa</th><th>% maksa</th><th>Serie</th><th>Powtórzenia</th></tr>');
+			html.push('<tr><th>Tydzien</th><th>Czas Przerwy [s]</th><th>%1CM</th><th>Liczba Serii</th><th>Liczba Powtórzeń</th></tr>');
 		for (var week of phase.weeks) {
 			html.push('<tr>');
 			html.push(`<td>${week.no}</td><td>${week.breakTime}</td><td>${week.maxLoad}</td><td>${week.series}</td><td>${week.repetition}</td>`);
